@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:front/api/api.dart';
+import 'package:front/models/anuncios.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -250,10 +252,28 @@ class MyContact extends StatelessWidget {
   }
 }
 
-class MyAd extends StatelessWidget {
+class MyAd extends StatefulWidget {
   final Color fontColor;
 
   const MyAd({super.key, required this.fontColor});
+
+  @override
+  State<MyAd> createState() => _MyAdState();
+}
+
+class _MyAdState extends State<MyAd> {
+  late List<Anuncios> anuncios;
+  Api api = Api();
+
+  void buscaAnuncios() async{
+    anuncios = await api.buscaAnuncios();
+  }
+
+  @override
+  void initState(){
+    buscaAnuncios();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -263,3 +283,4 @@ class MyAd extends StatelessWidget {
     );
   }
 }
+
